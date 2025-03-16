@@ -39,6 +39,7 @@ vector<int> extract_shortest_path(const vector<int>& distances, const vector<int
         path.insert(path.begin(), vertex);
         vertex = previous[vertex];
     }
+    path.insert(path.begin(), vertex);
     return path;
 }
 
