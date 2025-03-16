@@ -48,6 +48,11 @@ vector<string> generate_word_ladder(const string& begin_word, const string& end_
         vector<string> empty;
         return empty;
     }
+    if (word_list.find(end_word) == word_list.end()) {
+        error(begin_word, end_word, "end word not in dictionary");
+        vector<string> empty;
+        return empty;
+    }
     queue<vector<string>> ladder_queue;
     vector<string> begin;
     begin.push_back(begin_word);
@@ -88,13 +93,15 @@ void print_word_ladder(const vector<string>& ladder) {
     if (ladder.empty()) {
         cout << "No word ladder found." << endl;
     }
-    cout << "Word ladder found: ";
-    for (string word : ladder) {
-        cout << word << " ";
+    else {
+        cout << "Word ladder found: ";
+        for (string word : ladder) {
+            cout << word << " ";
+        }
+        cout << endl;
     }
-    cout << endl;
 }
 
 void verify_word_ladder() {
-    
+
 }
