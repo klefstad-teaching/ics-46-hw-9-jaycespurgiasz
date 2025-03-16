@@ -15,6 +15,10 @@ void error(string word1, string word2, string msg) {
 }
 
 bool edit_distance_within(const std::string& str1, const std::string& str2, int d) {
+    if (abs((int)(str1.length() - str2.length())) > d) {
+        return false;
+    }
+
     vector<vector<int>> costs(str1.length() + 1, vector<int>(str2.length() + 1, INF));
 
     for (int c = 0; c < str2.length() + 1; ++c) {
@@ -45,13 +49,11 @@ bool is_adjacent(const string& word1, const string& word2) {
 vector<string> generate_word_ladder(const string& begin_word, const string& end_word, const set<string>& word_list) {
     if (begin_word == end_word) {
         error(begin_word, end_word, "same word");
-        vector<string> empty;
-        return empty;
+        return {};
     }
     if (word_list.find(end_word) == word_list.end()) {
         error(begin_word, end_word, "end word not in dictionary");
-        vector<string> empty;
-        return empty;
+        return {};
     }
     queue<vector<string>> ladder_queue;
     vector<string> begin;
@@ -77,8 +79,7 @@ vector<string> generate_word_ladder(const string& begin_word, const string& end_
             }
         }
     }
-    vector<string> empty;
-    return empty;
+    return {};
 }
 
 void load_words(set<string> & word_list, const string& file_name) {
@@ -86,6 +87,9 @@ void load_words(set<string> & word_list, const string& file_name) {
     for (string word; (in >> word);) {
         for (char& c : word) {
             c = tolower(c);
+        }
+        if (word == "aback") {
+            cout << word;
         }
         word_list.insert(word);
     }
