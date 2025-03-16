@@ -43,7 +43,44 @@ bool edit_distance_within(const std::string& str1, const std::string& str2, int 
 }
 
 bool is_adjacent(const string& word1, const string& word2) {
-    return edit_distance_within(word1, word2, 1);
+    if (abs((int)(word1.length() - word2.length())) > 1) {
+        return false;
+    }
+    if (abs((int)(word1.length() - word2.length())) == 1) {
+        int i = 0;
+        int j = 0;
+        bool iLonger = (word1.length() > word2.length());
+        bool diff = false;
+        while (i < word1.length() && j < word2.length()) {
+            if (word1[i] != word2[j]) {
+                if (diff) {
+                    return false;
+                }
+                diff = true;
+                if (iLonger) {
+                    ++i;
+                }
+                else {
+                    ++j;
+                }
+            }
+            else {
+                ++i;
+                ++j;
+            }
+        }
+        return true;
+    }
+    bool diff = false;
+    for (int i = 0; i < word1.length(); ++i) {
+        if (word1[i] != word2[i]) {
+            diff = !diff;
+            if (!diff) {
+                return false;
+            }
+        }
+    }
+    return true;
 }
 
 vector<string> generate_word_ladder(const string& begin_word, const string& end_word, const set<string>& word_list) {
