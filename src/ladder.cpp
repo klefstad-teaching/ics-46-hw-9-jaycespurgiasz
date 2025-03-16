@@ -84,6 +84,9 @@ vector<string> generate_word_ladder(const string& begin_word, const string& end_
 void load_words(set<string> & word_list, const string& file_name) {
     ifstream in(file_name);
     for (string word; (in >> word);) {
+        for (char& c : word) {
+            c = tolower(c);
+        }
         word_list.insert(word);
     }
     in.close();
