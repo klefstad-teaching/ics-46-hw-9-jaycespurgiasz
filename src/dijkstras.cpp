@@ -19,8 +19,8 @@ vector<int> dijkstra_shortest_path(const Graph& G, int source, vector<int>& prev
             continue;
         }
         for (Edge edge : G[u]) {
-            int v = edge.dest;
-            int weight = edge.second;
+            int v = edge.dst;
+            int weight = edge.weight;
             if (!visited[u] && distances[u] + weight < distances[v]) {
                 distances[v] = distances[u] + weight;
                 previous[v] = u;
@@ -36,7 +36,7 @@ vector<int> extract_shortest_path(const vector<int>& distances, const vector<int
     vector<int> path;
     int vertex = destination;
     while (vertex != -1) {  
-        path.insert(0, vertex);
+        path.insert(path.begin(), vertex);
         vertex = previous[vertex];
     }
     return path;
