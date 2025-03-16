@@ -3,6 +3,8 @@
 #include <vector>
 #include <algorithm>
 #include <set>
+#include <fstream>
+#include <iostream>
 
 using namespace std;
 
@@ -41,25 +43,6 @@ bool is_adjacent(const string& word1, const string& word2) {
 }
 
 vector<string> generate_word_ladder(const string& begin_word, const string& end_word, const set<string>& word_list) {
-    /*
-    ladder_queue = queue of vector of strings
-    ladder_queue.push([begin_word])
-    visited = set of strings
-    visited.insert(begin_word)
-    while ladder_queue is not empty:
-        ladder = ladder_queue.pop_front()
-        last_word = last element of ladder
-        for word in word_list:
-            if is_adjacent(last_word, word):
-                if word not in visited:
-                    visited.insert(word)
-                    new_ladder = copy of ladder
-                    new_ladder.push_back(word)
-                    if word equals end_word:
-                        return new_ladder
-                    ladder_queue.push(new_ladder)
-    return no ladder found
-    */
     if (begin_word == end_word) {
         error(begin_word, end_word, "same word");
         vector<string> empty;
@@ -94,10 +77,18 @@ vector<string> generate_word_ladder(const string& begin_word, const string& end_
 }
 
 void load_words(set<string> & word_list, const string& file_name) {
-    
+    ifstream in(file_name);
+    for (string word; (in >> word);) {
+        word_list.insert(word);
+    }
+    in.close();
 }
 
 void print_word_ladder(const vector<string>& ladder) {
+    if (ladder.empty()) {
+        cout << "No word ladder found." << endl;
+    }
+    cout << "Word ladder found: ";
     for (string word : ladder) {
         cout << word << " ";
     }
